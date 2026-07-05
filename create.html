@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create GPL Party — GPL Online</title>
+  <meta name="description" content="Create your GPL party room. Upload photos, add celebrants, and share the link!" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/styles/global.css" />
+  <link rel="stylesheet" href="/src/styles/create.css" />
+</head>
+<body>
+  <div id="particles-bg" aria-hidden="true"></div>
+
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <a href="/" class="nav-logo">🎉 GPL Online</a>
+    <span class="nav-step">Step 1 of 1 — Create Party</span>
+  </nav>
+
+  <main class="create-main" role="main">
+    <!-- Firebase Not Configured Warning -->
+    <div id="firebase-warning" class="firebase-warning" style="display:none">
+      <div class="firebase-warning-content">
+        <span>⚠️</span>
+        <div>
+          <strong>Supabase not configured!</strong>
+          <p>Copy <code>.env.example</code> → <code>.env</code> and add your Supabase URL + anon key.
+          <a href="https://supabase.com" target="_blank" rel="noopener">Create project →</a></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="create-container">
+      <div class="create-header">
+        <h1 class="create-title">Create Your <span class="highlight">GPL Party</span> 🎯</h1>
+        <p class="create-subtitle">Upload photos, pick the victims, and unleash the GPL chaos!</p>
+      </div>
+
+      <form id="create-form" novalidate>
+        <!-- Room Name -->
+        <div class="form-section">
+          <label class="form-label" for="room-name">
+            🎪 Party Name
+          </label>
+          <input
+            type="text"
+            id="room-name"
+            class="form-input"
+            placeholder="e.g. Rahul's Birthday GPL 🎂"
+            maxlength="60"
+            required
+            autocomplete="off"
+          />
+          <span class="form-hint">Give it a fun name!</span>
+        </div>
+
+        <!-- Your Name -->
+        <div class="form-section">
+          <label class="form-label" for="creator-name">
+            👤 Your Name (Creator)
+          </label>
+          <input
+            type="text"
+            id="creator-name"
+            class="form-input"
+            placeholder="e.g. Priya"
+            maxlength="30"
+            required
+            autocomplete="off"
+          />
+        </div>
+
+        <!-- Celebrants -->
+        <div class="form-section">
+          <div class="section-header-row">
+            <label class="form-label">🎯 Who's Getting the GPL?</label>
+            <button type="button" id="add-celebrant-btn" class="btn btn-outline btn-sm">
+              + Add Another Person
+            </button>
+          </div>
+          <p class="form-hint">Upload a clear front-facing photo for each person. Their face will appear on the character!</p>
+
+          <div id="celebrants-list" class="celebrants-list">
+            <!-- Celebrant cards injected here -->
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="form-actions">
+          <button type="submit" id="create-btn" class="btn btn-primary btn-xl create-submit-btn">
+            <span id="create-btn-text">🚀 Create GPL Party!</span>
+            <div id="create-btn-spinner" class="btn-spinner" style="display:none"></div>
+            <span class="btn-shine"></span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <!-- Success Modal -->
+  <div id="success-modal" class="modal-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="success-title">
+    <div class="modal-box success-modal-box">
+      <div class="success-animation" aria-hidden="true">🎉</div>
+      <h2 id="success-title">GPL Party Created! 🔥</h2>
+      <p class="success-subtitle">Share this link with everyone. Let the GPL begin!</p>
+
+      <div class="share-link-box">
+        <input type="text" id="share-link-input" class="share-link-input" readonly aria-label="Party share link" />
+        <button id="copy-link-btn" class="btn btn-primary btn-sm" aria-label="Copy link to clipboard">
+          📋 Copy
+        </button>
+      </div>
+
+      <div id="qr-code-container" class="qr-container" aria-label="QR code for party link">
+        <div id="qr-code" class="qr-code"></div>
+        <p class="qr-label">Scan to join!</p>
+      </div>
+
+      <a id="join-party-btn" href="#" class="btn btn-secondary btn-lg" style="margin-top:1rem">
+        🎯 Go to Party Room →
+      </a>
+    </div>
+  </div>
+
+  <!-- Celebrant Card Template (hidden) -->
+  <template id="celebrant-template">
+    <div class="celebrant-card" data-celebrant-id="">
+      <button type="button" class="remove-celebrant-btn" aria-label="Remove this person" title="Remove">✕</button>
+      <div class="celebrant-photo-area">
+        <div class="photo-upload-zone" role="button" tabindex="0" aria-label="Click to upload photo">
+          <div class="photo-placeholder">
+            <span class="photo-icon">📸</span>
+            <span class="photo-text">Click to upload photo</span>
+            <span class="photo-hint">JPG, PNG — clear face photo works best</span>
+          </div>
+          <img class="photo-preview" alt="Uploaded photo preview" style="display:none" />
+          <canvas class="face-canvas" style="display:none" aria-hidden="true"></canvas>
+          <input type="file" class="photo-file-input" accept="image/*" aria-hidden="true" tabindex="-1" />
+        </div>
+        <div class="face-detection-status"></div>
+      </div>
+      <div class="celebrant-info">
+        <label class="form-label">Name</label>
+        <input type="text" class="form-input celebrant-name-input" placeholder="e.g. Rahul" maxlength="30" required />
+      </div>
+    </div>
+  </template>
+
+  <footer class="footer" role="contentinfo">
+    <p>made with <span class="heart">❤️</span> by <strong>RKRJ7</strong></p>
+  </footer>
+
+  <script type="module" src="/src/create.js"></script>
+</body>
+</html>

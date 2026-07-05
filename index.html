@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GPL Online — The Ultimate Online GPL Celebration!</title>
+  <meta name="description" content="Celebrate birthdays the desi engineering hostel way! Give GPL online to your friends, no matter where they are. Real-time, multiplayer, and absolutely hilarious." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/styles/global.css" />
+  <link rel="stylesheet" href="/src/styles/landing.css" />
+</head>
+<body>
+  <!-- Floating particles background -->
+  <div id="particles-bg" aria-hidden="true"></div>
+
+  <!-- Nav -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-logo">🎉 GPL Online</div>
+    <a href="/create.html" class="btn btn-primary btn-sm" id="nav-cta">Start a GPL Party</a>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-content">
+      <div class="hero-badge">🏆 The Desi Engineering Tradition, Now Online!</div>
+      <h1 id="hero-title" class="hero-title">
+        <span class="title-gpl">GPL</span>
+        <span class="title-online">Online</span>
+      </h1>
+      <p class="hero-subtitle">
+        Birthday? Celebration? Dude, tu kuch bhi kahe — <strong>GPL toh banta hai!</strong><br/>
+        Give virtual GPL to your friends from anywhere in the world. 🌍
+      </p>
+      <div class="hero-actions">
+        <a href="/create.html" class="btn btn-primary btn-xl" id="hero-cta-main">
+          <span>🎯 Start GPL Party</span>
+          <span class="btn-shine"></span>
+        </a>
+        <button class="btn btn-ghost btn-xl" id="btn-learn-more">
+          <span>How it works?</span>
+        </button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-number" id="live-sessions">...</span>
+          <span class="stat-label">Live Parties 🔥</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-number" id="total-hits">...</span>
+          <span class="stat-label">Total GPLs Given 🥿</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Animated weapon showcase -->
+    <div class="hero-weapons" aria-hidden="true">
+      <div class="weapon-orbit">
+        <div class="weapon-orb" style="--delay:0s">🖐️</div>
+        <div class="weapon-orb" style="--delay:0.5s">🥿</div>
+        <div class="weapon-orb" style="--delay:1s">👖</div>
+        <div class="weapon-orb" style="--delay:1.5s">🔨</div>
+        <div class="weapon-orb" style="--delay:2s">🏏</div>
+        <div class="weapon-orb" style="--delay:2.5s">👟</div>
+      </div>
+      <div class="hero-character-preview" id="hero-preview-canvas">
+        <div class="preview-person">😱</div>
+        <div class="preview-speech">HAI MERI MAA!</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="how-it-works" id="how-it-works" aria-labelledby="how-title">
+    <h2 id="how-title" class="section-title">How GPL Online Works</h2>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">01</div>
+        <div class="step-icon">📸</div>
+        <h3>Upload Photos</h3>
+        <p>Upload photos of the lucky person(s). Add multiple friends — the more, the merrier!</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">02</div>
+        <div class="step-icon">🔗</div>
+        <h3>Share the Link</h3>
+        <p>Get a unique party link + QR code. Send it to everyone in the group chat!</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">03</div>
+        <div class="step-icon">🥿</div>
+        <h3>GPL Time!</h3>
+        <p>Everyone picks their weapon — chappal, belt, hammer, cricket bat — and goes wild!</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">04</div>
+        <div class="step-icon">🎉</div>
+        <h3>Live & Synced</h3>
+        <p>Every hit is synced live across all devices. The screams, the chaos — all real-time!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Weapons showcase -->
+  <section class="weapons-showcase" aria-labelledby="weapons-title">
+    <h2 id="weapons-title" class="section-title">Your Arsenal of <span class="highlight">Destruction</span> 😈</h2>
+    <div class="weapons-grid">
+      <div class="weapon-card" data-weapon="chapaat">
+        <div class="weapon-icon">🖐️</div>
+        <div class="weapon-name">Bare Hand</div>
+        <div class="weapon-power">
+          <span class="power-dot filled"></span><span class="power-dot"></span><span class="power-dot"></span><span class="power-dot"></span><span class="power-dot"></span>
+        </div>
+      </div>
+      <div class="weapon-card" data-weapon="chappal">
+        <div class="weapon-icon">🥿</div>
+        <div class="weapon-name">Chappal</div>
+        <div class="weapon-power">
+          <span class="power-dot filled"></span><span class="power-dot filled"></span><span class="power-dot"></span><span class="power-dot"></span><span class="power-dot"></span>
+        </div>
+      </div>
+      <div class="weapon-card" data-weapon="belt">
+        <div class="weapon-icon">🩴</div>
+        <div class="weapon-name">Belt</div>
+        <div class="weapon-power">
+          <span class="power-dot filled"></span><span class="power-dot filled"></span><span class="power-dot filled"></span><span class="power-dot"></span><span class="power-dot"></span>
+        </div>
+      </div>
+      <div class="weapon-card" data-weapon="bat">
+        <div class="weapon-icon">🏏</div>
+        <div class="weapon-name">Cricket Bat</div>
+        <div class="weapon-power">
+          <span class="power-dot filled"></span><span class="power-dot filled"></span><span class="power-dot filled"></span><span class="power-dot filled"></span><span class="power-dot"></span>
+        </div>
+      </div>
+      <div class="weapon-card" data-weapon="hammer">
+        <div class="weapon-icon">🔨</div>
+        <div class="weapon-name">Hammer</div>
+        <div class="weapon-power">
+          <span class="power-dot filled"></span><span class="power-dot filled"></span><span class="power-dot filled"></span><span class="power-dot filled"></span><span class="power-dot filled"></span>
+        </div>
+      </div>
+      <div class="weapon-card" data-weapon="boot">
+        <div class="weapon-icon">👟</div>
+        <div class="weapon-name">Boot Kick</div>
+        <div class="weapon-power">
+          <span class="power-dot filled"></span><span class="power-dot filled"></span><span class="power-dot filled"></span><span class="power-dot"></span><span class="power-dot"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <section class="cta-banner" aria-labelledby="cta-title">
+    <div class="cta-content">
+      <h2 id="cta-title">Kya kisi ka birthday hai? 🎂</h2>
+      <p>Don't let distance stop you from giving a proper GPL celebration!</p>
+      <a href="/create.html" class="btn btn-primary btn-xl" id="bottom-cta">
+        <span>🚀 Create GPL Party Now</span>
+        <span class="btn-shine"></span>
+      </a>
+    </div>
+    <div class="cta-decorations" aria-hidden="true">
+      <span>🎊</span><span>🥳</span><span>🎉</span><span>🎈</span><span>🎂</span>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <p>made with <span class="heart">❤️</span> by <strong>RKRJ7</strong></p>
+  </footer>
+
+  <script type="module" src="/src/landing.js"></script>
+</body>
+</html>

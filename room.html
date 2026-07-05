@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GPL Party Room — GPL Online</title>
+  <meta name="description" content="Join the GPL party! Hit the virtual models with your chosen weapon. Real-time chaos!" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/styles/global.css" />
+  <link rel="stylesheet" href="/src/styles/arena.css" />
+</head>
+<body class="arena-body">
+  <div id="particles-bg" aria-hidden="true"></div>
+
+  <!-- Name Entry Modal -->
+  <div id="name-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="name-modal-title">
+    <div class="modal-box name-modal-box">
+      <div class="name-modal-emoji" aria-hidden="true">😈</div>
+      <h2 id="name-modal-title">Enter the GPL Arena!</h2>
+      <p id="room-name-display" class="name-modal-room"></p>
+      <div class="name-input-group">
+        <input
+          type="text"
+          id="user-name-input"
+          class="form-input"
+          placeholder="Your name (e.g., Priya)"
+          maxlength="30"
+          autocomplete="off"
+          aria-label="Enter your name to join the party"
+        />
+        <button id="join-party-btn" class="btn btn-primary btn-lg">
+          <span>🚀 Join Party!</span>
+          <span class="btn-shine"></span>
+        </button>
+      </div>
+      <p class="name-modal-hint">Your name will appear in the hit feed 😄</p>
+    </div>
+  </div>
+
+  <!-- Loading Screen -->
+  <div id="loading-screen" class="loading-screen" style="display:none" role="status" aria-live="polite">
+    <div class="loading-content">
+      <div class="loading-emoji" aria-hidden="true">🥿</div>
+      <p class="loading-text" id="loading-text">Loading GPL Party...</p>
+      <div class="loading-bar">
+        <div class="loading-bar-fill" id="loading-bar-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Arena -->
+  <div id="arena" style="display:none" role="main">
+    <!-- Top Bar -->
+    <header class="arena-header" role="banner">
+      <a href="/" class="arena-logo">🎉 GPL</a>
+      <div class="arena-room-info">
+        <span id="arena-room-name" class="arena-room-name"></span>
+        <div class="online-indicator">
+          <span class="online-dot" aria-hidden="true"></span>
+          <span id="online-count" class="online-count" aria-live="polite">0 online</span>
+        </div>
+      </div>
+      <div class="arena-header-actions">
+        <button id="stats-toggle-btn" class="btn btn-outline btn-sm mobile-only" aria-label="Toggle Stats">📊 <span class="hide-sm">Stats</span></button>
+        <button id="share-btn" class="btn btn-outline btn-sm" aria-label="Share party link">🔗 <span class="hide-sm">Share</span></button>
+        <button id="sound-toggle-btn" class="btn btn-ghost btn-sm" aria-label="Toggle sound" title="Toggle sound">🔊</button>
+      </div>
+    </header>
+
+    <!-- GPL Rage Meter -->
+    <div class="rage-meter-container" role="progressbar" aria-label="GPL Rage Meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="rage-meter-container">
+      <div class="rage-meter-label">
+        <span>🌡️ GPL RAGE METER</span>
+        <span id="rage-percent">0%</span>
+      </div>
+      <div class="rage-meter-track">
+        <div class="rage-meter-fill" id="rage-meter-fill"></div>
+      </div>
+    </div>
+
+    <!-- Arena Layout -->
+    <div class="arena-layout">
+      <!-- Sidebar Overlay (Mobile) -->
+      <div id="sidebar-overlay" class="sidebar-overlay" aria-hidden="true"></div>
+
+      <!-- Characters Area -->
+      <div class="arena-center">
+        <!-- Characters container -->
+        <div id="characters-container" class="characters-container" role="region" aria-label="GPL targets" aria-live="polite">
+          <!-- Character slots injected here -->
+        </div>
+
+        <!-- Hit Flash Overlay -->
+        <div id="hit-flash" class="hit-flash" aria-hidden="true"></div>
+
+        <!-- Weapon Animation Layer -->
+        <div id="weapon-anim-layer" class="weapon-anim-layer" aria-hidden="true"></div>
+      </div>
+
+      <!-- Side Panel: Live Feed + Leaderboard -->
+      <aside class="arena-sidebar" role="complementary" aria-label="Live stats and hit feed">
+        <!-- Online Users -->
+        <div class="sidebar-panel" id="users-panel">
+          <h3 class="sidebar-title">👥 Online Now</h3>
+          <div id="users-list" class="users-list" aria-live="polite" aria-label="Currently online users"></div>
+        </div>
+
+        <!-- Leaderboard -->
+        <div class="sidebar-panel" id="leaderboard-panel">
+          <h3 class="sidebar-title">🏆 Top Hitters</h3>
+          <div id="leaderboard-list" class="leaderboard-list" aria-live="polite" aria-label="Hit leaderboard"></div>
+        </div>
+
+        <!-- Hit Feed -->
+        <div class="sidebar-panel feed-panel" id="feed-panel">
+          <h3 class="sidebar-title">⚡ Live Feed</h3>
+          <div id="hit-feed" class="hit-feed" aria-live="polite" aria-label="Live hit feed" aria-atomic="false"></div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Bottom Weapon Bar -->
+    <div class="weapon-bar" role="toolbar" aria-label="Weapon selection">
+      <div class="weapon-bar-inner">
+        <div class="weapon-bar-label">Choose Your Weapon:</div>
+        <div class="weapons-row" id="weapons-row">
+          <button class="weapon-btn active" data-weapon="chapaat" id="weapon-chapaat" aria-label="Bare Hand slap" aria-pressed="true">
+            <span class="weapon-btn-icon">🖐️</span>
+            <span class="weapon-btn-name">Chapaat</span>
+            <span class="weapon-btn-power">⚡</span>
+          </button>
+          <button class="weapon-btn" data-weapon="chappal" id="weapon-chappal" aria-label="Slipper hit" aria-pressed="false">
+            <span class="weapon-btn-icon">🩴</span>
+            <span class="weapon-btn-name">Chappal</span>
+            <span class="weapon-btn-power">⚡⚡</span>
+          </button>
+          <button class="weapon-btn" data-weapon="belt" id="weapon-belt" aria-label="Belt whip" aria-pressed="false">
+            <span class="weapon-btn-icon">🎗️</span>
+            <span class="weapon-btn-name">Belt</span>
+            <span class="weapon-btn-power">⚡⚡⚡</span>
+          </button>
+          <button class="weapon-btn" data-weapon="bat" id="weapon-bat" aria-label="Cricket bat hit" aria-pressed="false">
+            <span class="weapon-btn-icon">🏏</span>
+            <span class="weapon-btn-name">Cricket Bat</span>
+            <span class="weapon-btn-power">⚡⚡⚡⚡</span>
+          </button>
+          <button class="weapon-btn" data-weapon="hammer" id="weapon-hammer" aria-label="Hammer slam" aria-pressed="false">
+            <span class="weapon-btn-icon">🔨</span>
+            <span class="weapon-btn-name">Hammer</span>
+            <span class="weapon-btn-power">⚡⚡⚡⚡⚡</span>
+          </button>
+          <button class="weapon-btn" data-weapon="boot" id="weapon-boot" aria-label="Boot kick" aria-pressed="false">
+            <span class="weapon-btn-icon">👟</span>
+            <span class="weapon-btn-name">Boot Kick</span>
+            <span class="weapon-btn-power">⚡⚡⚡</span>
+          </button>
+        </div>
+        <!-- Big GPL Button -->
+        <button id="gpl-hit-btn" class="gpl-hit-btn" aria-label="Give GPL to selected person">
+          <span class="gpl-btn-emoji" aria-hidden="true">💥</span>
+          <span class="gpl-btn-text">GPL!</span>
+        </button>
+      </div>
+      <footer class="arena-footer" role="contentinfo">
+        <p>made with <span class="heart">❤️</span> by <strong>RKRJ7</strong></p>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Combo Overlay -->
+  <div id="combo-overlay" class="combo-overlay" aria-hidden="true" aria-live="assertive"></div>
+
+  <!-- Rage Explosion Overlay -->
+  <div id="rage-explosion" class="rage-explosion" aria-hidden="true"></div>
+
+  <!-- Share Modal -->
+  <div id="share-modal" class="modal-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="share-modal-title">
+    <div class="modal-box share-modal-box">
+      <button id="close-share-modal" class="modal-close" aria-label="Close modal">✕</button>
+      <h2 id="share-modal-title">📣 Invite More Hitters!</h2>
+      <div class="share-link-box">
+        <input type="text" id="share-modal-link" class="share-link-input" readonly />
+        <button id="share-modal-copy-btn" class="btn btn-primary btn-sm">📋 Copy</button>
+      </div>
+      <div id="share-modal-qr" class="qr-container">
+        <div id="share-qr-code" class="qr-code"></div>
+        <p class="qr-label">Scan to join!</p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/room.js"></script>
+</body>
+</html>

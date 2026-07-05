@@ -1,0 +1,20 @@
+{
+  "name": "gpl-online",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^8.1.1"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.110.0",
+    "canvas-confetti": "^1.9.4",
+    "gsap": "^3.15.0",
+    "nanoid": "^5.1.16"
+  }
+}

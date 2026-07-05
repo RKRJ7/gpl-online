@@ -1,0 +1,461 @@
+/* ============================================================
+   GPL Online — Landing Page Styles
+   ============================================================ */
+
+/* ---------- Hero ---------- */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-10);
+  padding: calc(80px + var(--space-12)) var(--space-12) var(--space-12);
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.hero-content {
+  flex: 1;
+  max-width: 600px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: rgba(255, 107, 0, 0.12);
+  border: 1px solid rgba(255, 107, 0, 0.3);
+  border-radius: var(--radius-full);
+  padding: var(--space-2) var(--space-4);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: var(--space-5);
+  animation: fadeInDown 0.6s ease;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 10vw, 7rem);
+  line-height: 1;
+  letter-spacing: -1px;
+  margin-bottom: var(--space-5);
+  animation: fadeInUp 0.7s ease 0.1s both;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.title-gpl {
+  display: block;
+  background: var(--grad-fire);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 30px rgba(255, 107, 0, 0.5));
+  animation: gpl-pulse 2s ease infinite;
+}
+
+@keyframes gpl-pulse {
+  0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 107, 0, 0.4)); }
+  50% { filter: drop-shadow(0 0 40px rgba(255, 107, 0, 0.8)); }
+}
+
+.title-online {
+  display: block;
+  background: var(--grad-secondary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: var(--color-text-2);
+  margin-bottom: var(--space-8);
+  line-height: 1.8;
+  animation: fadeInUp 0.7s ease 0.2s both;
+}
+
+.hero-subtitle strong {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-10);
+  animation: fadeInUp 0.7s ease 0.3s both;
+}
+
+.hero-stats {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  animation: fadeInUp 0.7s ease 0.4s both;
+}
+
+.stat { text-align: left; }
+
+.stat-number {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+}
+
+.stat-divider {
+  width: 1px;
+  height: 40px;
+  background: var(--color-border-bright);
+}
+
+/* ---------- Hero Visual (right side) ---------- */
+.hero-weapons {
+  flex: 1;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  animation: fadeIn 0.8s ease 0.3s both;
+}
+
+.weapon-orbit {
+  position: relative;
+  width: 320px;
+  height: 320px;
+}
+
+.weapon-orb {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 2.5rem;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--grad-card);
+  border: 1px solid var(--color-border-bright);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-card);
+  animation: orbit 8s linear infinite;
+  animation-delay: var(--delay);
+  transform-origin: -100px 0;
+  margin-left: -30px;
+  margin-top: -30px;
+}
+
+@keyframes orbit {
+  from { transform: rotate(0deg) translateX(140px) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(140px) rotate(-360deg); }
+}
+
+.hero-character-preview {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.preview-person {
+  font-size: 5rem;
+  animation: bounce 0.8s ease infinite alternate;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+}
+
+@keyframes bounce {
+  from { transform: translateY(0) rotate(-5deg); }
+  to { transform: translateY(-15px) rotate(5deg); }
+}
+
+.preview-speech {
+  background: #fff;
+  color: #000;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  white-space: nowrap;
+  position: relative;
+  animation: blink 2s ease infinite;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+@keyframes blink {
+  0%, 80%, 100% { opacity: 1; transform: scale(1); }
+  85% { opacity: 0; transform: scale(0.8); }
+  90% { opacity: 1; transform: scale(1.05); }
+}
+
+.preview-speech::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-bottom-color: #fff;
+}
+
+/* ---------- How It Works ---------- */
+.how-it-works {
+  padding: var(--space-16) var(--space-8);
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: var(--space-5);
+}
+
+.step-card {
+  background: var(--grad-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-base);
+}
+
+.step-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--grad-primary);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.step-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 107, 0, 0.3);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 30px rgba(255, 107, 0, 0.15);
+}
+
+.step-card:hover::before { opacity: 0.04; }
+
+.step-number {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  color: rgba(255,255,255,0.06);
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-5);
+  line-height: 1;
+}
+
+.step-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-4);
+  position: relative;
+}
+
+.step-card h3 {
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: var(--space-2);
+  position: relative;
+}
+
+.step-card p {
+  font-size: 0.88rem;
+  color: var(--color-text-2);
+  line-height: 1.7;
+  position: relative;
+}
+
+/* ---------- Weapons Showcase ---------- */
+.weapons-showcase {
+  padding: var(--space-16) var(--space-8);
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.weapons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--space-4);
+}
+
+.weapon-card {
+  background: var(--grad-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  text-align: center;
+  transition: all var(--transition-spring);
+  cursor: default;
+}
+
+.weapon-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  border-color: var(--color-primary);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4), var(--shadow-glow-primary);
+}
+
+.weapon-icon {
+  font-size: 3rem;
+  margin-bottom: var(--space-3);
+  display: block;
+  transition: transform var(--transition-spring);
+}
+
+.weapon-card:hover .weapon-icon {
+  transform: rotate(-15deg) scale(1.2);
+}
+
+.weapon-name {
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: var(--space-2);
+}
+
+.weapon-power {
+  display: flex;
+  gap: 3px;
+  justify-content: center;
+}
+
+.power-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-border-bright);
+}
+
+.power-dot.filled {
+  background: var(--grad-fire);
+  box-shadow: 0 0 6px rgba(255, 107, 0, 0.6);
+}
+
+/* ---------- CTA Banner ---------- */
+.cta-banner {
+  margin: var(--space-8) var(--space-8) var(--space-16);
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(255, 107, 0, 0.15));
+  border: 1px solid rgba(255, 107, 0, 0.25);
+  border-radius: var(--radius-xl);
+  padding: var(--space-10) var(--space-8);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.cta-banner::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: var(--radius-xl);
+  padding: 1px;
+  background: var(--grad-primary);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.cta-content h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  margin-bottom: var(--space-3);
+}
+
+.cta-content p {
+  color: var(--color-text-2);
+  margin-bottom: var(--space-6);
+  font-size: 1rem;
+}
+
+.cta-decorations {
+  margin-top: var(--space-6);
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+.cta-decorations span {
+  display: inline-block;
+  animation: float-deco 3s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 0.3s);
+}
+
+.cta-decorations span:nth-child(1) { animation-delay: 0s; }
+.cta-decorations span:nth-child(2) { animation-delay: 0.3s; }
+.cta-decorations span:nth-child(3) { animation-delay: 0.6s; }
+.cta-decorations span:nth-child(4) { animation-delay: 0.9s; }
+.cta-decorations span:nth-child(5) { animation-delay: 1.2s; }
+
+@keyframes float-deco {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(10deg); }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .hero {
+    flex-direction: column;
+    padding: calc(80px + var(--space-8)) var(--space-6) var(--space-8);
+    text-align: center;
+    min-height: auto;
+  }
+  .hero-content { max-width: 100%; }
+  .hero-actions { justify-content: center; }
+  .hero-stats { justify-content: center; }
+  .hero-weapons { width: 100%; }
+  .weapon-orbit { width: 260px; height: 260px; }
+  .weapon-orb { transform-origin: -80px 0; }
+  @keyframes orbit {
+    from { transform: rotate(0deg) translateX(110px) rotate(0deg); }
+    to { transform: rotate(360deg) translateX(110px) rotate(-360deg); }
+  }
+}
+
+@media (max-width: 600px) {
+  .hero { padding: calc(70px + var(--space-6)) var(--space-4) var(--space-6); }
+  .how-it-works, .weapons-showcase { padding: var(--space-10) var(--space-4); }
+  .cta-banner { margin: var(--space-4); padding: var(--space-8) var(--space-4); }
+  .weapons-grid { grid-template-columns: repeat(3, 1fr); }
+}
