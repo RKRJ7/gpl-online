@@ -63,12 +63,7 @@ npm run dev
 ```
 Open `http://localhost:5174` in your browser.
 
----
 
-## 🌐 Deployment
-
-This project is optimized to be deployed seamlessly on **Vercel** or **Netlify**. 
-Just connect your GitHub repository, set the build command to `npm run build`, output directory to `dist`, and remember to add your Supabase Environment Variables in their dashboard!
 
 ---
 
