@@ -3,26 +3,28 @@
 // ============================================================
 
 import { initParticlesBg } from './utils.js';
-import { initSupabase, isSupabaseConfigured, getGlobalStats } from './supabase.js';
+import { initSupabase, isSupabaseConfigured, getGlobalStats, cleanupExpiredRooms } from './supabase.js';
 
 initParticlesBg();
 
 // Load optional global stats
-if (isSupabaseConfigured()) {
-  initSupabase();
-  getGlobalStats().then((stats) => {
+document.addEventListener('DOMContentLoaded', async () => {
+  if (isSupabaseConfigured()) {
+    initSupabase();
+    cleanupExpiredRooms();
+    getGlobalStats().then((stats) => {
+      const s = document.getElementById('live-sessions');
+      const h = document.getElementById('total-hits');
+      if (s) s.textContent = stats.total_sessions ?? '🔥';
+      if (h) h.textContent = formatNumber(stats.total_hits ?? 0);
+    }).catch(() => {});
+  } else {
     const s = document.getElementById('live-sessions');
     const h = document.getElementById('total-hits');
-    if (s) s.textContent = stats.total_sessions ?? '🔥';
-    if (h) h.textContent = formatNumber(stats.total_hits ?? 0);
-  }).catch(() => {});
-} else {
-  const s = document.getElementById('live-sessions');
-  const h = document.getElementById('total-hits');
-  if (s) s.textContent = '🔥';
-  if (h) h.textContent = '∞';
-}
-
+    if (s) s.textContent = '🔥';
+    if (h) h.textContent = '∞';
+  }
+});
 // Smooth scroll to how-it-works
 document.getElementById('btn-learn-more')?.addEventListener('click', () => {
   document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });

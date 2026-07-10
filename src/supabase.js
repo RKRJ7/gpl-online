@@ -126,6 +126,42 @@ export async function uploadPhoto(roomId, celebrantId, file) {
   return data.publicUrl;
 }
 
+// ─── Auto-Cleanup (Lazy) ────────────────────────────────────
+
+export async function cleanupExpiredRooms() {
+  if (!supabase) return;
+
+  try {
+    const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    
+    // 1. Find expired rooms
+    const { data: oldRooms, error: findErr } = await supabase
+      .from('rooms')
+      .select('id')
+      .lt('created_at', yesterday);
+      
+    if (findErr || !oldRooms || oldRooms.length === 0) return;
+
+    // 2. For each room, delete photos then delete room
+    for (const room of oldRooms) {
+      // List all files for this room
+      const { data: files } = await supabase.storage
+        .from('celebrant-photos')
+        .list(`rooms/${room.id}`);
+        
+      if (files && files.length > 0) {
+        const pathsToDelete = files.map(f => `rooms/${room.id}/${f.name}`);
+        await supabase.storage.from('celebrant-photos').remove(pathsToDelete);
+      }
+      
+      // Delete the room (this automatically cascades to room_hits)
+      await supabase.from('rooms').delete().eq('id', room.id);
+    }
+  } catch (err) {
+    console.warn('Silent cleanup failed:', err);
+  }
+}
+
 // ─── Realtime Channel ────────────────────────────────────────
 //
 //  Supabase Realtime has two powerful primitives we use:

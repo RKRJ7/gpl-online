@@ -15,32 +15,12 @@ create table if not exists public.rooms (
 -- Enable pg_cron extension for auto-cleanup (Requires turning on in Supabase Extensions)
 create extension if not exists pg_cron;
 
--- 1.5 Auto-delete rooms older than 24 hours
--- This cron job runs every hour and deletes expired rooms.
--- Since room_hits references rooms(id) on delete cascade, leaderboard data is also cleaned up!
-select cron.schedule(
-  'cleanup_expired_rooms',
-  '0 * * * *', -- Every hour
-  $$ delete from public.rooms where created_at < now() - interval '24 hours' $$
-);
-
--- 1.6 Storage Auto-Cleanup Trigger
--- Automatically delete uploaded photos from storage when a room is deleted (e.g. by the cron job)
-create or replace function public.cleanup_room_storage()
-returns trigger as $$
-begin
-  delete from storage.objects
-  where bucket_id = 'celebrant-photos'
-    and (storage.foldername(name))[1] = 'rooms'
-    and (storage.foldername(name))[2] = old.id;
-  return old;
-end;
-$$ language plpgsql security definer;
-
+-- 1.5 Legacy Cleanup Removal
+-- We used to have a pg_cron job and trigger here, but they are blocked by Supabase's new storage rules.
+-- Run these commands to remove them from your database:
+select cron.unschedule('cleanup_expired_rooms');
 drop trigger if exists cleanup_room_storage_trigger on public.rooms;
-create trigger cleanup_room_storage_trigger
-  before delete on public.rooms
-  for each row execute function public.cleanup_room_storage();
+drop function if exists public.cleanup_room_storage;
 
 -- 2. Persistent Leaderboard table
 create table if not exists public.room_hits (
@@ -94,6 +74,10 @@ create policy "rooms_read"
 create policy "rooms_insert"
   on public.rooms for insert
   with check (true);
+
+create policy "rooms_delete"
+  on public.rooms for delete
+  using (true);
 
 -- Room Hits: anyone can read and upsert
 alter table public.room_hits enable row level security;
@@ -156,6 +140,11 @@ create policy "Anyone can upload photos"
     bucket_id = 'celebrant-photos'
     and (storage.foldername(name))[1] = 'rooms'
   );
+
+drop policy if exists "Anyone can delete photos" on storage.objects;
+create policy "Anyone can delete photos"
+  on storage.objects for delete
+  using ( bucket_id = 'celebrant-photos' );
 
 -- ============================================================
 --  Enable Realtime for the rooms table (optional)
